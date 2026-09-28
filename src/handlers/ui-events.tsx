@@ -196,6 +196,7 @@ export default {
     } else if (fieldModeValue === MINE) {
       this.forRange(minePlot, rangeRadius, x, y)
     } else if (fieldModeValue === CLEANUP) {
+      this.saveUndoState(this.state)
       this.forRange(clearPlot, rangeRadius, x, y)
     } else if (fieldModeValue === WATER) {
       this.forRange(waterPlot, rangeRadius, x, y)
@@ -534,5 +535,9 @@ export default {
     this.showNotification(UPDATE_AVAILABLE, 'success', () => {
       updateServiceWorker(true)
     })
+  },
+
+  handleUndoLastAction(this: Farmhand) {
+    this.undoLastAction()
   },
 }

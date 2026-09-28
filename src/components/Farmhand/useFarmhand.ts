@@ -178,6 +178,25 @@ export const useFarmhand = (props: FarmhandProps) => {
 
   const [state, setState] = useState<farmhand.state>(createInitialState)
   const stateRef = useRef<farmhand.state>(state)
+  const undoStateRef = useRef<farmhand.state | null>(null)
+
+  const saveUndoState = (currentState: farmhand.state) => {
+    undoStateRef.current = {
+      ...currentState,
+      field: structuredClone(currentState.field),
+      inventory: structuredClone(currentState.inventory),
+    }
+  }
+
+  const undoLastAction = () => {
+    const previousState = undoStateRef.current
+
+    if (!previousState) return
+
+    undoStateRef.current = null
+
+    setState(() => previousState)
+  }
 
   stateRef.current = state
 
@@ -375,6 +394,8 @@ export const useFarmhand = (props: FarmhandProps) => {
       isInputBlocked,
       isChatAvailable,
       isForestUnlocked,
+      saveUndoState,
+      undoLastAction,
       setState: (updater: any, callback?: () => void) => {
         setState(previous => {
           const next =

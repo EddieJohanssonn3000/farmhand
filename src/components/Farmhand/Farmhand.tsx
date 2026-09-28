@@ -14,6 +14,7 @@ import { SnackbarProvider } from 'notistack'
 import { object } from 'prop-types'
 import { GlobalHotKeys } from 'react-hotkeys'
 import { Redirect } from 'react-router-dom'
+import Button from '@mui/material/Button/index.js'
 
 import { Z_INDEX } from '../../constants.js'
 import theme, { blueStripeBg } from '../../mui-theme.js'
@@ -263,6 +264,7 @@ const Farmhand = (props: FarmhandProps) => {
                   <HotelIcon />
                 </Fab>
               </Tooltip>
+              <Button onClick={handlers.handleUndoLastAction}>Undo</Button>
             </Div>
             {isChatAvailable ? <ChatRoom /> : null}
             <NotificationSystem />
